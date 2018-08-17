@@ -150,7 +150,7 @@ packages:
       name: loading_view
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   logging:
     dependency: transitive
     description:
@@ -337,7 +337,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:

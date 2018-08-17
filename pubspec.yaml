@@ -1,14 +1,17 @@
 name: tip_dialog
 description: A Flutter Tip Dialog
-version: 0.0.1
-author:
-homepage:
+version: 1.0.0
+author: inRush <inrush1997@gmail.com>
+homepage: https://github.com/inRush/TipDialog
 
 dependencies:
   flutter:
     sdk: flutter
 
-  loading_view: ^1.0.1
+  loading_view: ^1.0.2
+
+environment:
+  sdk: ">=2.0.0-dev.28.0 <3.0.0"
 
 dev_dependencies:
   flutter_test:

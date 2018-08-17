@@ -35,9 +35,8 @@ class TipDialogIcon extends StatelessWidget {
         );
       case TipDialogType.LOADING:
         return new LoadingView(
-          new Size(35.0, 35.0),
+          35.0,
           color: color,
-          duration: const Duration(milliseconds: 1000),
         );
       default:
         throw new Exception(
@@ -156,6 +155,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   VoidCallback _animationListener;
   bool _prepareDismiss = false;
   Widget _tipDialog;
+
   /// if true, the dialog will not automatically disappear
   /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
   bool _isLoading;
