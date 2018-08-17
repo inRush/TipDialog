@@ -156,6 +156,8 @@ class TipDialogContainerState extends State<TipDialogContainer>
   VoidCallback _animationListener;
   bool _prepareDismiss = false;
   Widget _tipDialog;
+  /// if true, the dialog will not automatically disappear
+  /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
   bool _isLoading;
 
   bool get isShow => _show;
@@ -167,6 +169,12 @@ class TipDialogContainerState extends State<TipDialogContainer>
     });
   }
 
+  /// tipDialog: Need to display the widget
+  /// (default uses the dialog set by [TipDialogContainer])
+  ///
+  /// isLoading: decide whether to disappear automatically
+  /// (default uses the value set by [TipDialogContainer],
+  /// set type = TipDialogType.LOADING, the value will be true, otherwise will be false.)
   void show({Widget tipDialog, bool isLoading: false}) {
     _tipDialog = tipDialog ?? widget.tipDialog;
     _isLoading = isLoading ?? widget.isLoading;
