@@ -10,3 +10,7 @@
 ## [1.1.0] - (FUNCTION CHANGE)
 
 * add tip dialog global support
+
+## [1.1.1] - (MODIFY)
+
+* fix bugs that occur when using globally
