@@ -119,7 +119,7 @@ class TipDialogContainer extends StatefulWidget {
   TipDialogContainer(
       {Key key,
       @required this.child,
-      String tip,
+      String defaultTip,
       TipDialogType type: TipDialogType.NOTHING,
       this.duration: const Duration(seconds: 3),
       this.show: false,
@@ -127,7 +127,7 @@ class TipDialogContainer extends StatefulWidget {
       this.maskAlpha: 0.3})
       : tipDialog = new TipDialog(
           type: type,
-          tip: tip,
+          tip: defaultTip,
         ),
         isLoading = type == TipDialogType.LOADING,
         super(key: key);
@@ -262,9 +262,71 @@ class TipDialogContainerState extends State<TipDialogContainer>
         ),
       ));
     }
-    return new Stack(
-      alignment: Alignment.center,
-      children: widgets,
-    );
+
+    return new _TipDialogProvider(
+        controller: new TipDialogController(
+            showCallback: show, dismissCallback: dismiss),
+        child: new Stack(
+          alignment: Alignment.center,
+          children: widgets,
+        ));
+  }
+}
+
+typedef void ShowTipDialogCallback({Widget tipDialog, bool isLoading});
+typedef void DismissTipDialogCallback();
+
+class TipDialogController {
+  final ShowTipDialogCallback showCallback;
+  final DismissTipDialogCallback dismissCallback;
+
+  TipDialogController(
+      {Key key,
+      ShowTipDialogCallback showCallback,
+      DismissTipDialogCallback dismissCallback})
+      : showCallback = showCallback,
+        dismissCallback = dismissCallback;
+
+  show({Widget tipDialog, bool isLoading: false}) {
+    showCallback(tipDialog: tipDialog, isLoading: isLoading);
+  }
+
+  dismiss() {
+    dismissCallback();
+  }
+}
+
+class _TipDialogProvider extends InheritedWidget {
+  final TipDialogController controller;
+
+  _TipDialogProvider(
+      {Key key, @required this.controller, @required Widget child})
+      : assert(controller != null),
+        assert(child != null),
+        super(key: key, child: child);
+
+  static TipDialogController of(BuildContext context) {
+    final _TipDialogProvider scope =
+        context.inheritFromWidgetOfExactType(_TipDialogProvider);
+    return scope?.controller;
+  }
+
+  @override
+  bool updateShouldNotify(_TipDialogProvider oldWidget) {
+    return controller != oldWidget.controller;
+  }
+}
+
+typedef Widget TipDialogBuilder(
+    BuildContext context, TipDialogController controller);
+
+class TipDialogConnector extends StatelessWidget {
+  final TipDialogBuilder builder;
+
+  TipDialogConnector({this.builder});
+
+  @override
+  Widget build(BuildContext context) {
+    return builder(context, _TipDialogProvider.of(context));
   }
 }
