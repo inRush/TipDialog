@@ -90,6 +90,7 @@ class TipDialog extends StatelessWidget {
           tip,
           textAlign: TextAlign.center,
           style: new TextStyle(color: Colors.white, fontSize: 15.0),
+          textDirection: TextDirection.ltr,
         ),
       ));
     }
@@ -189,7 +190,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
     super.initState();
     _show = widget.show;
     _animationController = new AnimationController(
-        value: 0.0, duration: new Duration(milliseconds: 100), vsync: this);
+        value: 0.0, duration: new Duration(milliseconds: 200), vsync: this);
     _animationListener = () {
       if (_animationController.value == 0.0 && _prepareDismiss) {
         setState(() {
