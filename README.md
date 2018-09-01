@@ -59,48 +59,56 @@ this.outSideTouchable: false,
 this.maskAlpha: 0.3
 ```
 
+#### Global Use
 ``` dart
-final GlobalKey<TipDialogContainerState> _tipDialogKey = new GlobalKey();
- 
-Widget _buildItem(String name, VoidCallback callback) {
-    return new GestureDetector(
-      onTap: callback,
-      child: new ListTile(
-        title: new Text(name),
-      ),
-    );
-  }
-)
+/// Use [TipDialogContainer] globally
 /// This widget can be globally supported
-/// Use [TipDialogConnector] to obtain [TipDialogController]
-/// In addition to using controller, you can also use [GlobalKey] to control show or dismiss
-new TipDialogContainer(
-        key: _tipDialogKey,
+void main() => runApp(new MyApp());
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return new TipDialogContainer(
         defaultType: TipDialogType.LOADING,
         defaultTip: "Loading",
-        child:  new TipDialogConnector(
-          builder: (context, tipController) {
-            return new ListView(children: <Widget>[
-              _buildItem("Loading Type Tip Dialog", () async {
-                tipController.show();
-                await new Future.delayed(new Duration(seconds: 3));
-                tipController.dismiss();
-              }),
-              new Divider(),
-              _buildItem("Success Type Tip Dialog", () async {
-                tipController.show(
-                  tipDialog: new TipDialog(
-                  type: TipDialogType.SUCCESS,
-                  tip: "Loaded Successfully",
-                ));
-              }),
-            ]);
-          },
-        ),
-      )
-```
-## 5. Default Dialog Type
+        child: new MaterialApp(
+          title: 'TipDialog Demo',
+          theme: new ThemeData(),
+          home: new MyHomePage(title: 'TipDialog Demo Home Page'),
+        ));
+  }
+}
 
+/// Use [TipDialogConnector] to obtain [TipDialogController]
+/// In addition to using controller, you can also use [GlobalKey] to control show or dismiss
+new TipDialogConnector(
+  builder: (context, tipController) {
+    return new ListView(children: <Widget>[
+      _buildItem("Loading Type Tip Dialog", () async {
+        tipController.show();
+        await new Future.delayed(new Duration(seconds: 3));
+        tipController.dismiss();
+      }),
+      new Divider(),
+      _buildItem("Success Type Tip Dialog", () async {
+        tipController.show(
+        tipDialog: new TipDialog(
+          type: TipDialogType.SUCCESS,
+          tip: "Loaded Successfully",
+        ));
+      }),
+    ]);
+  },
+)
+```
+>Use a custom widget when using [TipDialogContainer] globally, there may be appear some unexpected errors.
+>such as Text or Icon, will appear similar to the following error.
+
+***No Directionality widget found.***
+
+>Just set TextDirection just fine. See the custom Widget in the example for details.
+
+## 5. Default Dialog Type
 ```dart
 enum TipDialogType { NOTHING, LOADING, SUCCESS, FAIL, INFO }
 
@@ -127,4 +135,4 @@ void show({Widget tipDialog, bool isLoading: false});
 void dismiss();
 ```
 
-> See the example directory for more details.
+>See the example directory for more details.
