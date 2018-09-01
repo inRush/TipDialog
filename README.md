@@ -47,8 +47,8 @@ import 'package:loading_view/loading_view.dart';
 ```dart
 [ TipDialogContainer ]
 @required this.child,
-String tip,
-TipDialogType type: TipDialogType.NOTHING,
+String defaultTip,
+TipDialogType defaultType: TipDialogType.NOTHING,
 /// automatically disappear time
 this.duration: const Duration(seconds: 3),
 /// In the beginning, whether to display 
@@ -70,19 +70,33 @@ Widget _buildItem(String name, VoidCallback callback) {
       ),
     );
   }
-  
+)
+/// This widget can be globally supported
+/// Use [TipDialogConnector] to obtain [TipDialogController]
+/// In addition to using controller, you can also use [GlobalKey] to control show or dismiss
 new TipDialogContainer(
         key: _tipDialogKey,
-        type: TipDialogType.LOADING,
-        tip: "Loading",
-        child: new ListView(children: <Widget>[
-          _buildItem("Loading Type Tip Dialog", () async {
-            _tipDialogKey.currentState.show();
-            await new Future.delayed(new Duration(seconds: 3));
-            _tipDialogKey.currentState.dismiss();
-          }),
-          new Divider(),
-        ]),
+        defaultType: TipDialogType.LOADING,
+        defaultTip: "Loading",
+        child:  new TipDialogConnector(
+          builder: (context, tipController) {
+            return new ListView(children: <Widget>[
+              _buildItem("Loading Type Tip Dialog", () async {
+                tipController.show();
+                await new Future.delayed(new Duration(seconds: 3));
+                tipController.dismiss();
+              }),
+              new Divider(),
+              _buildItem("Success Type Tip Dialog", () async {
+                tipController.show(
+                  tipDialog: new TipDialog(
+                  type: TipDialogType.SUCCESS,
+                  tip: "Loaded Successfully",
+                ));
+              }),
+            ]);
+          },
+        ),
       )
 ```
 ## 5. Default Dialog Type
@@ -96,7 +110,7 @@ SUCCESS: have a success icon
 FAIL: have a fail icon
 INFO: have a info icon
 ```
-## 6. State Method
+## 6. State And TipDialogController Method
 
 ```dart
 /// tipDialog: Need to display the widget
@@ -113,4 +127,4 @@ void show({Widget tipDialog, bool isLoading: false});
 void dismiss();
 ```
 
->See the example directory for more details.
+> See the example directory for more details.

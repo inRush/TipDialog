@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new TipDialogContainer(
         key: _tipDialogKey,
-        type: TipDialogType.LOADING,
+        defaultType: TipDialogType.LOADING,
         defaultTip: "Loading",
         child: new TipDialogConnector(
           builder: (context, tipController) {

@@ -120,16 +120,16 @@ class TipDialogContainer extends StatefulWidget {
       {Key key,
       @required this.child,
       String defaultTip,
-      TipDialogType type: TipDialogType.NOTHING,
+      TipDialogType defaultType: TipDialogType.NOTHING,
       this.duration: const Duration(seconds: 3),
       this.show: false,
       this.outSideTouchable: false,
       this.maskAlpha: 0.3})
       : tipDialog = new TipDialog(
-          type: type,
+          type: defaultType,
           tip: defaultTip,
         ),
-        isLoading = type == TipDialogType.LOADING,
+        isLoading = defaultType == TipDialogType.LOADING,
         super(key: key);
 
   final Widget child;

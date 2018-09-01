@@ -6,3 +6,7 @@
 
 * fix loading view version bug.
 * set default loading duration
+
+## [1.1.0] - (FUNCTION CHANGE)
+
+* add tip dialog global support
