@@ -120,25 +120,12 @@ class TipDialogContainer extends StatefulWidget {
   TipDialogContainer(
       {Key key,
       @required this.child,
-      String defaultTip,
-      TipDialogType defaultType: TipDialogType.NOTHING,
       this.duration: const Duration(seconds: 2),
-      this.show: false,
-      this.outSideTouchable: false,
       this.maskAlpha: 0.3})
-      : tipDialog = new TipDialog(
-          type: defaultType,
-          tip: defaultTip,
-        ),
-        isLoading = defaultType == TipDialogType.LOADING,
-        super(key: key);
+      : super(key: key);
 
   final Widget child;
-  final Widget tipDialog;
   final Duration duration;
-  final bool isLoading;
-  final bool show;
-  final bool outSideTouchable;
   final double maskAlpha;
 
   @override
@@ -159,7 +146,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
 
   /// if true, the dialog will not automatically disappear
   /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
-  bool _isLoading;
+  bool _isAutoDismiss;
 
   bool get isShow => _show;
 
@@ -176,10 +163,11 @@ class TipDialogContainerState extends State<TipDialogContainer>
   /// isLoading: decide whether to disappear automatically
   /// (default uses the value set by [TipDialogContainer],
   /// set type = TipDialogType.LOADING, the value will be true, otherwise will be false.)
-  void show({Widget tipDialog, bool isLoading: false}) {
-    _tipDialog = tipDialog ?? widget.tipDialog;
+  void show({@required Widget tipDialog, bool isAutoDismiss: true}) {
+    assert(tipDialog != null);
+    _tipDialog = tipDialog;
     // when tip dialog equal null, isLoading must inherit the origin value
-    _isLoading = tipDialog == null ? widget.isLoading : isLoading ?? widget.isLoading;
+    _isAutoDismiss = isAutoDismiss;
     setState(() {
       _start();
       _show = true;
@@ -189,7 +177,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   @override
   void initState() {
     super.initState();
-    _show = widget.show;
+    _show = false;
     _animationController = new AnimationController(
         value: 0.0, duration: new Duration(milliseconds: 200), vsync: this);
     _animationListener = () {
@@ -215,7 +203,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
 
   void _start() {
     _animationController.forward(from: 0.0);
-    if (!_isLoading) {
+    if (_isAutoDismiss) {
       if (_timer != null) {
         _timer.cancel();
         if (_show) {
@@ -260,9 +248,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   Widget build(BuildContext context) {
     List<Widget> widgets = [widget.child];
     if (_show) {
-      if (!widget.outSideTouchable) {
-        widgets.add(_buildMaskLayer());
-      }
+      widgets.add(_buildMaskLayer());
       widgets.add(new ScaleTransition(
         scale: _scaleAnimation,
         child: new FadeTransition(
@@ -282,7 +268,8 @@ class TipDialogContainerState extends State<TipDialogContainer>
   }
 }
 
-typedef void ShowTipDialogCallback({Widget tipDialog, bool isLoading});
+typedef void ShowTipDialogCallback(
+    {@required Widget tipDialog, bool isAutoDismiss});
 typedef void DismissTipDialogCallback();
 
 class TipDialogController {
@@ -296,8 +283,8 @@ class TipDialogController {
       : showCallback = showCallback,
         dismissCallback = dismissCallback;
 
-  show({Widget tipDialog, bool isLoading: false}) {
-    showCallback(tipDialog: tipDialog, isLoading: isLoading);
+  show({@required Widget tipDialog, bool isAutoDismiss: true}) {
+    showCallback(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
   }
 
   dismiss() {

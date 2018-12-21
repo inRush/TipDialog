@@ -23,7 +23,7 @@ Flutter 提示框
 
 ``` dart
 dependencies:
-  tip_dialog: ^1.1.2
+  tip_dialog: ^2.0.0
 ```
 
 ## 2. 安装
@@ -43,14 +43,8 @@ import 'package:loading_view/loading_view.dart';
 ```dart
 [ TipDialogContainer ]
 @required this.child,
-String defaultTip,
-TipDialogType defaultType: TipDialogType.NOTHING,
 /// 自动消失的时间
 this.duration: const Duration(seconds: 3),
-/// 在一开始创建的时候,是否立刻显示出来
-this.show: false,
-/// 是否能点击提示框外部
-this.outSideTouchable: false,
 /// 遮罩层不透明度
 this.maskAlpha: 0.3
 ```
@@ -64,8 +58,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new TipDialogContainer(
-        defaultType: TipDialogType.LOADING,
-        defaultTip: "Loading",
         child: new MaterialApp(
           title: 'TipDialog Demo',
           theme: new ThemeData(),
@@ -75,13 +67,13 @@ class MyApp extends StatelessWidget {
 }
 
 /// 使用 [TipDialogConnector] 获取 [TipDialogController]
-/// 除了能用Controller控制以外,你还可以使用 [GlobalKey] 去控制显示和消失
-/// In addition to using controller, you can also use [GlobalKey] to control show or dismiss
 new TipDialogConnector(
   builder: (context, tipController) {
     return new ListView(children: <Widget>[
       _buildItem("Loading Type Tip Dialog", () async {
-        tipController.show();
+        tipController.show(
+           tipDialog: new TipDialog(type: TipDialogType.LOADING, tip: "Loading"),
+           isAutoDismiss: false);
         await new Future.delayed(new Duration(seconds: 3));
         tipController.dismiss();
       }),
@@ -118,16 +110,48 @@ INFO: have a info icon
 
 ```dart
 /// tipDialog: 需要进行显示的提示框
-/// 默认显示的提示框是通过[TipDialogContainer]来进行设置的
 ///
-/// isLoading: 这个变量决定了显示出来的提示框是否会自动消失,其默认值是在[TipDialogContainer]中设置的
-/// 当提示框的type是TipDialogType.LOADING的时候,isLoading的值会自动设置成true,否则其他情况默认设置为false
-/// 这个值为true的时候,显示出来的提示框不会自动消失,除非调用dismiss方法
-/// 如果这个值是false,那么提示框会在一定时间内消失,这个值是在新建[TipDialogContainer]的时候设置的.
-void show({Widget tipDialog, bool isLoading: false});
+/// isAutoDismiss: 这个变量决定了显示出来的提示框是否会自动消失,默认为 false
+/// 这个值为false的时候,显示出来的提示框不会自动消失,除非调用dismiss方法
+/// 如果这个值是true,那么提示框会在一定时间内消失,这个值是在新建[TipDialogContainer]的时候设置的.
+void show({@required Widget tipDialog, bool isAutoDismiss: false});
 
 /// 隐藏提示框
 void dismiss();
 ```
 
 >更多细节请参考示例中的代码.
+
+## 7. 版本记录
+### [2.0.0] 
+
+* 设置默认自动消失时间为2s
+* 删除 [TipDialogContainer] 部分参数
+    -- show
+    -- outSideTouchable
+    -- defaultTip
+    -- defaultType
+* 改变show方法的isLoading为isAutoDismiss
+* 强制显示遮罩层
+
+### [1.1.2] - (MODIFY)
+
+* 修复无限调用 dismiss 方法的 bug
+* 修复 isLoading 无效的问题
+
+### [1.1.1] - (MODIFY)
+
+* 修复全局使用时出现的错误
+
+### [1.1.0] - (FUNCTION CHANGE)
+
+* 添加全局支持
+
+### [1.0.1] - (MODIFY).
+
+* 修复 loading view 的版本 bug
+* 设置默认loading时间
+
+### [1.0.0] - first release.
+
+* 释放版本
