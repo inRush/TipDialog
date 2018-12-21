@@ -164,6 +164,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   bool get isShow => _show;
 
   void dismiss() {
+    print("dismiss");
     setState(() {
       _prepareDismiss = true;
       _animationController.reverse();
@@ -217,10 +218,14 @@ class TipDialogContainerState extends State<TipDialogContainer>
     if (!_isLoading) {
       if (_timer != null) {
         _timer.cancel();
+        if (_show) {
+          dismiss();
+        }
         _timer = null;
       }
-      _timer = new Timer.periodic(widget.duration, (timer) {
+      _timer = new Timer(widget.duration, () {
         dismiss();
+        _timer = null;
       });
     }
   }
@@ -229,6 +234,9 @@ class TipDialogContainerState extends State<TipDialogContainer>
   void dispose() {
     if (_timer != null) {
       _timer.cancel();
+      if (_show) {
+        dismiss();
+      }
     }
     _animationController.removeListener(_animationListener);
     _animationController.dispose();
