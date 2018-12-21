@@ -14,3 +14,8 @@
 ## [1.1.1] - (MODIFY)
 
 * fix bugs that occur when using globally
+
+## [1.1.2] - (MODIFY)
+
+* fix infinite call dismiss bug
+* fixed an issue where setting the isLoading value is invalid

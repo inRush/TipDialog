@@ -24,7 +24,7 @@ Add this to your package's pubspec.yaml file:
 
 ``` dart
 dependencies:
-  tip_dialog: ^1.1.1
+  tip_dialog: ^1.1.2
 ```
 ## 2. Install it
 You can install packages from the command line:

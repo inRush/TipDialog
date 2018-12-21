@@ -23,7 +23,7 @@ Flutter 提示框
 
 ``` dart
 dependencies:
-  tip_dialog: ^1.1.1
+  tip_dialog: ^1.1.2
 ```
 
 ## 2. 安装
