@@ -122,7 +122,7 @@ class TipDialogContainer extends StatefulWidget {
       @required this.child,
       String defaultTip,
       TipDialogType defaultType: TipDialogType.NOTHING,
-      this.duration: const Duration(seconds: 3),
+      this.duration: const Duration(seconds: 2),
       this.show: false,
       this.outSideTouchable: false,
       this.maskAlpha: 0.3})

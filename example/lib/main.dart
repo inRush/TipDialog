@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
     return new TipDialogContainer(
         defaultType: TipDialogType.LOADING,
         defaultTip: "Loading",
+        duration: const Duration(seconds: 2),
         child: new MaterialApp(
           title: 'TipDialog Demo',
           theme: new ThemeData(),
