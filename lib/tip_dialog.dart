@@ -164,7 +164,6 @@ class TipDialogContainerState extends State<TipDialogContainer>
   bool get isShow => _show;
 
   void dismiss() {
-    print("dismiss");
     setState(() {
       _prepareDismiss = true;
       _animationController.reverse();
@@ -179,7 +178,8 @@ class TipDialogContainerState extends State<TipDialogContainer>
   /// set type = TipDialogType.LOADING, the value will be true, otherwise will be false.)
   void show({Widget tipDialog, bool isLoading: false}) {
     _tipDialog = tipDialog ?? widget.tipDialog;
-    _isLoading = isLoading ?? widget.isLoading;
+    // when tip dialog equal null, isLoading must inherit the origin value
+    _isLoading = tipDialog == null ? widget.isLoading : isLoading ?? widget.isLoading;
     setState(() {
       _start();
       _show = true;
