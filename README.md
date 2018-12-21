@@ -24,7 +24,7 @@ Add this to your package's pubspec.yaml file:
 
 ``` dart
 dependencies:
-  tip_dialog: ^1.1.2
+  tip_dialog: ^2.0.0
 ```
 ## 2. Install it
 You can install packages from the command line:
@@ -45,14 +45,8 @@ import 'package:loading_view/loading_view.dart';
 ```dart
 [ TipDialogContainer ]
 @required this.child,
-String defaultTip,
-TipDialogType defaultType: TipDialogType.NOTHING,
 /// automatically disappear time
 this.duration: const Duration(seconds: 3),
-/// In the beginning, whether to display 
-this.show: false,
-/// whether show mask layer
-this.outSideTouchable: false,
 /// mask layer alpha
 this.maskAlpha: 0.3
 ```
@@ -67,8 +61,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new TipDialogContainer(
-        defaultType: TipDialogType.LOADING,
-        defaultTip: "Loading",
         child: new MaterialApp(
           title: 'TipDialog Demo',
           theme: new ThemeData(),
@@ -78,12 +70,13 @@ class MyApp extends StatelessWidget {
 }
 
 /// Use [TipDialogConnector] to obtain [TipDialogController]
-/// In addition to using controller, you can also use [GlobalKey] to control show or dismiss
 new TipDialogConnector(
   builder: (context, tipController) {
     return new ListView(children: <Widget>[
       _buildItem("Loading Type Tip Dialog", () async {
-        tipController.show();
+        tipController.show(
+          tipDialog: new TipDialog(type: TipDialogType.LOADING, tip: "Loading"),
+          isAutoDismiss: false);
         await new Future.delayed(new Duration(seconds: 3));
         tipController.dismiss();
       }),
@@ -120,17 +113,49 @@ INFO: have a info icon
 
 ```dart
 /// tipDialog: Need to display the widget
-/// (default uses the dialog set by [TipDialogContainer])
 ///
-/// isLoading: decide whether to disappear automatically
-/// (default uses the value set by [TipDialogContainer],
-/// set type = TipDialogType.LOADING, the value will be true, otherwise will be false.)
+/// isAutoDismiss: decide whether to disappear automatically, default is false
 /// if true, the dialog will not automatically disappear
 /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
-void show({Widget tipDialog, bool isLoading: false});
+void show({@required Widget tipDialog, bool isAutoDismiss: false});
 
 /// dismiss dialog
 void dismiss();
 ```
 
 >See the example directory for more details.
+
+
+## 7. Change log
+### [2.0.0] 
+
+* set default auto dismiss duration as 2 seconds
+* delete [TipDialogContainer] Partial parameters
+    -- show
+    -- outSideTouchable
+    -- defaultTip
+    -- defaultType
+* change show method parameter isLoading to isAutoDismiss
+* force display mask layer
+
+### [1.1.2] - (MODIFY)
+
+* fix infinite call dismiss bug
+* fixed an issue where setting the isLoading value is invalid
+
+### [1.1.1] - (MODIFY)
+
+* fix bugs that occur when using globally
+
+### [1.1.0] - (FUNCTION CHANGE)
+
+* add tip dialog global support
+
+### [1.0.1] - (MODIFY).
+
+* fix loading view version bug.
+* set default loading duration
+
+### [1.0.0] - first release.
+
+* add release.

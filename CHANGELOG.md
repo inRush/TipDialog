@@ -19,3 +19,14 @@
 
 * fix infinite call dismiss bug
 * fixed an issue where setting the isLoading value is invalid
+
+## [2.0.0] 
+
+* set default dismiss duration as 2 seconds
+* delete TipDialogContainer parameters
+    -- show
+    -- outSideTouchable
+    -- defaultTip
+    -- defaultType
+* change show method parameter isLoading to isAutoDismiss
+* force display mask layer

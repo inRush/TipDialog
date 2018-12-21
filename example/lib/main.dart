@@ -10,8 +10,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new TipDialogContainer(
-        defaultType: TipDialogType.LOADING,
-        defaultTip: "Loading",
         duration: const Duration(seconds: 2),
         child: new MaterialApp(
           title: 'TipDialog Demo',
@@ -31,7 +29,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   Widget _buildItem(String name, VoidCallback callback) {
     return new GestureDetector(
       onTap: callback,
@@ -52,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context, tipController) {
           return new ListView(children: <Widget>[
             _buildItem("Loading Type Tip Dialog", () async {
-              tipController.show();
+              tipController.show(
+                  tipDialog: new TipDialog(
+                      type: TipDialogType.LOADING, tip: "Loading"),
+                  isAutoDismiss: false);
               await new Future.delayed(new Duration(seconds: 3));
               tipController.dismiss();
             }),
@@ -120,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: new Text(
                       "Custom",
                       style: new TextStyle(color: Colors.white),
+
                       /// if TipDialogContainer are outside of MaterialApp,
                       /// here is a must to set
                       textDirection: TextDirection.ltr,
