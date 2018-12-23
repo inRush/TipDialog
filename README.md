@@ -114,10 +114,10 @@ INFO: have a info icon
 ```dart
 /// tipDialog: Need to display the widget
 ///
-/// isAutoDismiss: decide whether to disappear automatically, default is false
+/// isAutoDismiss: decide whether to disappear automatically, default is true
 /// if true, the dialog will not automatically disappear
 /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
-void show({@required Widget tipDialog, bool isAutoDismiss: false});
+void show({@required Widget tipDialog, bool isAutoDismiss: true});
 
 /// dismiss dialog
 void dismiss();

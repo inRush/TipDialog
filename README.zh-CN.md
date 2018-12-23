@@ -111,10 +111,10 @@ INFO: have a info icon
 ```dart
 /// tipDialog: 需要进行显示的提示框
 ///
-/// isAutoDismiss: 这个变量决定了显示出来的提示框是否会自动消失,默认为 false
+/// isAutoDismiss: 这个变量决定了显示出来的提示框是否会自动消失,默认为 true
 /// 这个值为false的时候,显示出来的提示框不会自动消失,除非调用dismiss方法
 /// 如果这个值是true,那么提示框会在一定时间内消失,这个值是在新建[TipDialogContainer]的时候设置的.
-void show({@required Widget tipDialog, bool isAutoDismiss: false});
+void show({@required Widget tipDialog, bool isAutoDismiss: true});
 
 /// 隐藏提示框
 void dismiss();
