@@ -37,7 +37,7 @@ $ flutter packages get
 Now in your Dart code, you can use:
 
 ```dart
-import 'package:loading_view/loading_view.dart';
+import 'package:tip_dialog/tip_dialog.dart';
 ```
 ## 4. Use
 #### Available attributes
