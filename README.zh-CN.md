@@ -35,7 +35,7 @@ $ flutter packages get
 ## 3. 导入
 
 ```dart
-import 'package:loading_view/loading_view.dart';
+import 'package:tip_dialog/tip_dialog.dart';
 ```
 ## 4. 使用
 #### 可用的属性
