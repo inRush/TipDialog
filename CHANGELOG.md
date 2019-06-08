@@ -30,3 +30,8 @@
     -- defaultType
 * change show method parameter isLoading to isAutoDismiss
 * force display mask layer
+
+## [2.0.1]
+
+* fix dismiss bug
+* upgrade android build gradle to 5.1.1

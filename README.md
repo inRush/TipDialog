@@ -127,6 +127,12 @@ void dismiss();
 
 
 ## 7. Change log
+
+## [2.0.1]
+
+* fix dismiss bug
+* upgrade android build gradle to 5.1.1
+
 ### [2.0.0] 
 
 * set default auto dismiss duration as 2 seconds
