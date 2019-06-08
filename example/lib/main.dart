@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   tipDialog: new TipDialog(
                       type: TipDialogType.LOADING, tip: "Loading"),
                   isAutoDismiss: false);
-              await new Future.delayed(new Duration(seconds: 3));
+              await new Future.delayed(new Duration(seconds: 5));
               tipController.dismiss();
             }),
             new Divider(),

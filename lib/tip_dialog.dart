@@ -152,8 +152,13 @@ class TipDialogContainerState extends State<TipDialogContainer>
 
   void dismiss() {
     setState(() {
-      _prepareDismiss = true;
-      _animationController.reverse();
+      if (_animationController.isAnimating) {
+        _show = false;
+        _animationController.stop(canceled: true);
+      } else {
+        _prepareDismiss = true;
+        _animationController.reverse();
+      }
     });
   }
 
