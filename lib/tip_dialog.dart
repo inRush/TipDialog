@@ -321,6 +321,7 @@ class _TipDialogProvider extends InheritedWidget {
 typedef Widget TipDialogBuilder(
     BuildContext context, TipDialogController controller);
 
+@deprecated
 class TipDialogConnector extends StatelessWidget {
   final TipDialogBuilder builder;
 

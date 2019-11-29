@@ -23,7 +23,7 @@ Flutter 提示框
 
 ``` dart
 dependencies:
-  tip_dialog: ^2.0.1
+  tip_dialog: ^2.1.0
 ```
 
 ## 2. 安装
@@ -40,8 +40,8 @@ import 'package:tip_dialog/tip_dialog.dart';
 ## 4. 使用
 #### 可用的属性
 
-```dart
-[ TipDialogContainer ]
+```
+/// [ TipDialogContainer ]
 @required this.child,
 /// 自动消失的时间
 this.duration: const Duration(seconds: 3),
@@ -49,7 +49,104 @@ this.duration: const Duration(seconds: 3),
 this.maskAlpha: 0.3
 ```
 
-#### 全局使用
+#### 全局使用 (2.1.1)
+```dart
+/// 全局使用 [TipDialogContainer]
+void main() => runApp(new MyApp());
+class MyApp extends StatelessWidget {
+  // 将该控件放到你应用的根节点上
+  @override
+  Widget build(BuildContext context) {
+    return new TipDialogContainer(
+        child: new MaterialApp(
+          title: 'TipDialog Demo',
+          theme: new ThemeData(),
+          home: new MyHomePage(title: 'TipDialog Demo Home Page'),
+        ));
+  }
+}
+/// 使用 TipDialogHelper 去显示 tip
+ Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
+        elevation: 0.5,
+      ),
+      body: new ListView(children: <Widget>[
+        _buildItem("Loading Type Tip Dialog", () async {
+          TipDialogHelper.loading(context, "Loading");
+          await new Future.delayed(new Duration(seconds: 5));
+          TipDialogHelper.dismiss(context);
+        }),
+        new Divider(),
+        _buildItem("Success Type Tip Dialog", () async {
+          TipDialogHelper.success(context, "Loaded Successfully");
+        }),
+        new Divider(),
+        _buildItem("Fail Type Tip Dialog", () async {
+          TipDialogHelper.fail(context, "Load Failed");
+        }),
+        new Divider(),
+        _buildItem("Info Type Tip Dialog", () async {
+          TipDialogHelper.info(context, "Do Not Repeat");
+        }),
+        new Divider(),
+        _buildItem("Only Icon Tip Dialog", () async {
+          TipDialogHelper.show(context,
+              tipDialog: new TipDialog(
+                type: TipDialogType.SUCCESS,
+              ));
+        }),
+        new Divider(),
+        _buildItem("Only text Tip Dialog", () async {
+          TipDialogHelper.show(context,
+              tipDialog: new TipDialog(
+                type: TipDialogType.NOTHING,
+                tip: "Do Not Repeat",
+              ));
+        }),
+        new Divider(),
+        _buildItem("Custom Icon Tip Dialog", () async {
+          TipDialogHelper.show(context,
+              tipDialog: new TipDialog.customIcon(
+                icon: new Icon(
+                  Icons.file_download,
+                  color: Colors.white,
+                  size: 30.0,
+                  textDirection: TextDirection.ltr,
+                ),
+                tip: "Download",
+              ));
+        }),
+        new Divider(),
+        _buildItem("Custom Body Tip Dialog", () async {
+          TipDialogHelper.show(context,
+              tipDialog: new TipDialog.builder(
+                bodyBuilder: (context) {
+                  return new Container(
+                    width: 120.0,
+                    height: 90.0,
+                    alignment: Alignment.center,
+                    child: new Text(
+                      "Custom",
+                      style: new TextStyle(color: Colors.white),
+
+                      /// if TipDialogContainer are outside of MaterialApp,
+                      /// here is a must to set
+                      textDirection: TextDirection.ltr,
+                    ),
+                  );
+                },
+                color: Colors.blue.withAlpha(150),
+              ));
+        }),
+        new Divider(),
+      ])
+    );
+  }
+```
+
+#### 全局使用 (2.1.1 版本中已弃用)
 ``` dart
 /// 全局使用 [TipDialogContainer]
 void main() => runApp(new MyApp());
@@ -67,27 +164,35 @@ class MyApp extends StatelessWidget {
 }
 
 /// 使用 [TipDialogConnector] 获取 [TipDialogController]
-new TipDialogConnector(
-  builder: (context, tipController) {
-    return new ListView(children: <Widget>[
-      _buildItem("Loading Type Tip Dialog", () async {
-        tipController.show(
-           tipDialog: new TipDialog(type: TipDialogType.LOADING, tip: "Loading"),
-           isAutoDismiss: false);
-        await new Future.delayed(new Duration(seconds: 3));
-        tipController.dismiss();
-      }),
-      new Divider(),
-      _buildItem("Success Type Tip Dialog", () async {
-        tipController.show(
-        tipDialog: new TipDialog(
-          type: TipDialogType.SUCCESS,
-          tip: "Loaded Successfully",
-        ));
-      }),
-    ]);
-  },
-)
+Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
+        elevation: 0.5,
+      ),
+      body: new TipDialogConnector(
+        builder: (context, tipController) {
+          return new ListView(children: <Widget>[
+            _buildItem("Loading Type Tip Dialog", () async {
+              tipController.show(
+                  tipDialog: new TipDialog(type: TipDialogType.LOADING, tip: "Loading"),
+                  isAutoDismiss: false);
+              await new Future.delayed(new Duration(seconds: 3));
+              tipController.dismiss();
+            }),
+            new Divider(),
+            _buildItem("Success Type Tip Dialog", () async {
+              tipController.show(
+                  tipDialog: new TipDialog(
+                    type: TipDialogType.SUCCESS,
+                    tip: "Loaded Successfully",
+                  ));
+            }),
+          ]);
+        },
+      )
+    );
+  }
 ```
 >在全局使用自定义控件的使用,可能会出现一些错误
 >比如使用Text或者Icon的时候,会出现下面的错误.
@@ -123,6 +228,10 @@ void dismiss();
 >更多细节请参考示例中的代码.
 
 ## 7. 版本记录
+
+## [2.1.0]
+
+* 添加TipDialogHelper,弃用TipDialogConnector
 
 ## [2.0.1]
 

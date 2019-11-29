@@ -35,3 +35,7 @@
 
 * fix dismiss bug
 * upgrade android build gradle to 5.1.1
+
+## [2.1.0]
+
+* add TipDialogHelper and deprecated TipDialogConnector
