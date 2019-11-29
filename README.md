@@ -51,7 +51,7 @@ this.duration: const Duration(seconds: 3),
 this.maskAlpha: 0.3
 ```
 
-#### Global Use (2.1.1)
+#### Global Use (2.1.0)
 ```dart
 /// Use [TipDialogContainer] globally
 /// This widget can be globally supported

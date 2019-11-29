@@ -49,7 +49,7 @@ this.duration: const Duration(seconds: 3),
 this.maskAlpha: 0.3
 ```
 
-#### 全局使用 (2.1.1)
+#### 全局使用 (2.1.0)
 ```dart
 /// 全局使用 [TipDialogContainer]
 void main() => runApp(new MyApp());
@@ -146,7 +146,7 @@ class MyApp extends StatelessWidget {
   }
 ```
 
-#### 全局使用 (2.1.1 版本中已弃用)
+#### 全局使用 (2.1.0 版本中已弃用)
 ``` dart
 /// 全局使用 [TipDialogContainer]
 void main() => runApp(new MyApp());
