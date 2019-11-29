@@ -4,17 +4,17 @@ Flutter 提示框
 
 | 加载提示框 | 成功提示框 | 失败提示框 |
 | --- | --- | --- |
-|  ![WechatIMG9](http://qiniu.inrush.cn/2018-08-17-WechatIMG9.jpeg) | ![WechatIMG8](http://qiniu.inrush.cn/2018-08-17-WechatIMG8.jpeg)| ![WechatIMG6](http://qiniu.inrush.cn/2018-08-17-WechatIMG6.jpeg) |
+|  ![加载提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/loading.jpeg) | ![成功提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/success.jpeg)| ![失败提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/failed.jpeg) |
 
 
 | 信息提示框 | 只有图标的提示框 | 只有文本的提示框  |
 | --- | --- | --- |
-| ![WechatIMG7](http://qiniu.inrush.cn/2018-08-17-WechatIMG7.jpeg)| ![WechatIMG5](http://qiniu.inrush.cn/2018-08-17-WechatIMG5.jpeg)| ![WechatIMG4](http://qiniu.inrush.cn/2018-08-17-WechatIMG4.jpeg)|
+| ![信息提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/info.jpeg)| ![只有图标的提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/only-icon.jpeg)| ![只有文本的提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/only-text.jpeg)|
 
 
 | 自定义图标提示框 | 自定义提示框 |
 | --- | --- |
-| ![WechatIMG3](http://qiniu.inrush.cn/2018-08-17-WechatIMG3.jpeg)| ![WechatIMG2](http://qiniu.inrush.cn/2018-08-17-WechatIMG2.jpeg)|
+| ![自定义图标提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-icon.jpeg)| ![自定义提示框](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-body.jpeg)|
 
 
 

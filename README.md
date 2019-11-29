@@ -5,17 +5,17 @@ A Flutter Tip Dialog
 
 | Loading Type Dialog | Success Tye Dialog | Fail Type Dialog |
 | --- | --- | --- |
-|  ![WechatIMG9](http://qiniu.inrush.cn/2018-08-17-WechatIMG9.jpeg) | ![WechatIMG8](http://qiniu.inrush.cn/2018-08-17-WechatIMG8.jpeg)| ![WechatIMG6](http://qiniu.inrush.cn/2018-08-17-WechatIMG6.jpeg) |
+|  ![Loading](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/loading.jpeg) | ![Success](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/success.jpeg)| ![Fail](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/failed.jpeg) |
 
 
 | Info Type Dialog | Only Icon Dialog | Onl Text Dialog  |
 | --- | --- | --- |
-| ![WechatIMG7](http://qiniu.inrush.cn/2018-08-17-WechatIMG7.jpeg)| ![WechatIMG5](http://qiniu.inrush.cn/2018-08-17-WechatIMG5.jpeg)| ![WechatIMG4](http://qiniu.inrush.cn/2018-08-17-WechatIMG4.jpeg)|
+| ![Info](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/info.jpeg)| ![OnlyIcon](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/only-icon.jpeg)| ![OnlyText](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/only-text.jpeg)|
 
 
 | Custom Icon Dialog | Custom Body Dialog |
 | --- | --- |
-| ![WechatIMG3](http://qiniu.inrush.cn/2018-08-17-WechatIMG3.jpeg)| ![WechatIMG2](http://qiniu.inrush.cn/2018-08-17-WechatIMG2.jpeg)|
+| ![CustomIcon](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-icon.jpeg)| ![CustomBody](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-body.jpeg)|
 
 
 
