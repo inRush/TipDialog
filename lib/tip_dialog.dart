@@ -331,3 +331,48 @@ class TipDialogConnector extends StatelessWidget {
     return builder(context, _TipDialogProvider.of(context));
   }
 }
+
+class TipDialogHelper {
+  static TipDialogController _controller;
+
+
+  static void _checkController(BuildContext context) {
+    if (_controller == null) {
+      _controller = _TipDialogProvider.of(context);
+    }
+    if (_controller == null) {
+      throw Exception(
+          "[TipDialogController] is not found in this widget tree, please set TipDialogContainer on this widget tree top");
+    }
+  }
+
+  static void show(BuildContext context,
+      {@required Widget tipDialog, bool isAutoDismiss: true}) {
+    _checkController(context);
+    _controller.show(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
+  }
+
+  static void dismiss(BuildContext context) {
+    _checkController(context);
+    _controller.dismiss();
+  }
+
+  static void info(BuildContext context, String tip) {
+    show(context, tipDialog: TipDialog(type: TipDialogType.INFO, tip: tip));
+  }
+
+  static void fail(BuildContext context, String errMsg) {
+    show(context, tipDialog: TipDialog(type: TipDialogType.FAIL, tip: errMsg));
+  }
+
+  static void success(BuildContext context, String success) {
+    show(context,
+        tipDialog: TipDialog(type: TipDialogType.SUCCESS, tip: success));
+  }
+
+  static void loading(BuildContext context, String loadingTip) {
+    show(context,
+        tipDialog: TipDialog(type: TipDialogType.LOADING, tip: loadingTip),
+        isAutoDismiss: false);
+  }
+}
