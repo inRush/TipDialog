@@ -24,7 +24,7 @@ Add this to your package's pubspec.yaml file:
 
 ``` dart
 dependencies:
-  tip_dialog: ^2.1.0
+  tip_dialog: ^3.0.0
 ```
 ## 2. Install it
 You can install packages from the command line:
@@ -51,153 +51,91 @@ this.duration: const Duration(seconds: 3),
 this.maskAlpha: 0.3
 ```
 
-#### Global Use (2.1.0)
+#### Global Use
 ```dart
 /// Use [TipDialogContainer] globally
 /// This widget can be globally supported
 void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new TipDialogContainer(
-        child: new MaterialApp(
-          title: 'TipDialog Demo',
-          theme: new ThemeData(),
-          home: new MyHomePage(title: 'TipDialog Demo Home Page'),
-        ));
+    return new MaterialApp(
+      title: 'TipDialog Demo',
+      theme: new ThemeData(),
+      home: Stack(
+        children: <Widget>[
+          MyHomePage(title: 'TipDialog Demo Home Page'),
+          // add [TipDialogContainer] widget here
+          TipDialogContainer(duration: const Duration(seconds: 2))
+        ],
+      ),
+    );
   }
 }
-/// use TipDialogHelper to show tip
- Widget build(BuildContext context) {
+/// use TipDialogHelper to show or dismiss tip
+  Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-        elevation: 0.5,
-      ),
-      body: new ListView(children: <Widget>[
-        _buildItem("Loading Type Tip Dialog", () async {
-          TipDialogHelper.loading(context, "Loading");
-          await new Future.delayed(new Duration(seconds: 5));
-          TipDialogHelper.dismiss(context);
-        }),
-        new Divider(),
-        _buildItem("Success Type Tip Dialog", () async {
-          TipDialogHelper.success(context, "Loaded Successfully");
-        }),
-        new Divider(),
-        _buildItem("Fail Type Tip Dialog", () async {
-          TipDialogHelper.fail(context, "Load Failed");
-        }),
-        new Divider(),
-        _buildItem("Info Type Tip Dialog", () async {
-          TipDialogHelper.info(context, "Do Not Repeat");
-        }),
-        new Divider(),
-        _buildItem("Only Icon Tip Dialog", () async {
-          TipDialogHelper.show(context,
-              tipDialog: new TipDialog(
-                type: TipDialogType.SUCCESS,
-              ));
-        }),
-        new Divider(),
-        _buildItem("Only text Tip Dialog", () async {
-          TipDialogHelper.show(context,
-              tipDialog: new TipDialog(
-                type: TipDialogType.NOTHING,
-                tip: "Do Not Repeat",
-              ));
-        }),
-        new Divider(),
-        _buildItem("Custom Icon Tip Dialog", () async {
-          TipDialogHelper.show(context,
-              tipDialog: new TipDialog.customIcon(
-                icon: new Icon(
-                  Icons.file_download,
-                  color: Colors.white,
-                  size: 30.0,
-                  textDirection: TextDirection.ltr,
-                ),
-                tip: "Download",
-              ));
-        }),
-        new Divider(),
-        _buildItem("Custom Body Tip Dialog", () async {
-          TipDialogHelper.show(context,
-              tipDialog: new TipDialog.builder(
-                bodyBuilder: (context) {
-                  return new Container(
-                    width: 120.0,
-                    height: 90.0,
-                    alignment: Alignment.center,
-                    child: new Text(
-                      "Custom",
-                      style: new TextStyle(color: Colors.white),
-
-                      /// if TipDialogContainer are outside of MaterialApp,
-                      /// here is a must to set
-                      textDirection: TextDirection.ltr,
-                    ),
-                  );
-                },
-                color: Colors.blue.withAlpha(150),
-              ));
-        }),
-        new Divider(),
-      ])
-    );
+        appBar: new AppBar(
+          title: new Text(widget.title),
+          elevation: 0.5,
+        ),
+        body: new ListView(children: <Widget>[
+          _buildItem("Loading Type Tip Dialog", () async {
+            TipDialogHelper.loading("Loading");
+            await new Future.delayed(new Duration(seconds: 5));
+            TipDialogHelper.dismiss();
+          }),
+          new Divider(),
+          _buildItem("Success Type Tip Dialog", () async {
+            TipDialogHelper.success("Loaded Successfully");
+          }),
+          new Divider(),
+          _buildItem("Only text Tip Dialog", () async {
+            TipDialogHelper.show(
+                tipDialog: new TipDialog(
+              type: TipDialogType.NOTHING,
+              tip: "Do Not Repeat",
+            ));
+          }),
+          new Divider(),
+          _buildItem("Custom Icon Tip Dialog", () async {
+            TipDialogHelper.show(
+                tipDialog: new TipDialog.customIcon(
+              icon: new Icon(
+                Icons.file_download,
+                color: Colors.white,
+                size: 30.0,
+                textDirection: TextDirection.ltr,
+              ),
+              tip: "Download",
+            ));
+          }),
+          new Divider(),
+          _buildItem("Custom Body Tip Dialog", () async {
+            TipDialogHelper.show(
+                tipDialog: new TipDialog.builder(
+              bodyBuilder: (context) {
+                return new Container(
+                  width: 120.0,
+                  height: 90.0,
+                  alignment: Alignment.center,
+                  child: new Text(
+                    "Custom",
+                    style: new TextStyle(color: Colors.white),
+                    /// if TipDialogContainer are outside of MaterialApp,
+                    /// here is a must to set
+                    textDirection: TextDirection.ltr,
+                  ),
+                );
+              },
+              color: Colors.blue.withAlpha(150),
+            ));
+          }),
+          new Divider(),
+        ]));
   }
 ```
 
-#### Global Use (deprecated on 2.1.0)
-```dart
-/// Use [TipDialogContainer] globally
-/// This widget can be globally supported
-void main() => runApp(new MyApp());
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new TipDialogContainer(
-        child: new MaterialApp(
-          title: 'TipDialog Demo',
-          theme: new ThemeData(),
-          home: new MyHomePage(title: 'TipDialog Demo Home Page'),
-        ));
-  }
-}
-
-/// Use [TipDialogConnector] to obtain [TipDialogController]
-Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-        elevation: 0.5,
-      ),
-      body: new TipDialogConnector(
-        builder: (context, tipController) {
-          return new ListView(children: <Widget>[
-            _buildItem("Loading Type Tip Dialog", () async {
-              tipController.show(
-                  tipDialog: new TipDialog(type: TipDialogType.LOADING, tip: "Loading"),
-                  isAutoDismiss: false);
-              await new Future.delayed(new Duration(seconds: 3));
-              tipController.dismiss();
-            }),
-            new Divider(),
-            _buildItem("Success Type Tip Dialog", () async {
-              tipController.show(
-                  tipDialog: new TipDialog(
-                    type: TipDialogType.SUCCESS,
-                    tip: "Loaded Successfully",
-                  ));
-            }),
-          ]);
-        },
-      )
-    );
-  }
-```
 >Use a custom widget when using [TipDialogContainer] globally, there may be appear some unexpected errors.
 >such as Text or Icon, will appear similar to the following error.
 
@@ -215,7 +153,7 @@ SUCCESS: have a success icon
 FAIL: have a fail icon
 INFO: have a info icon
 ```
-## 6. State And TipDialogController Method
+## 6. TipDialogHelper Method
 
 ```dart
 /// tipDialog: Need to display the widget
@@ -227,6 +165,15 @@ void show({@required Widget tipDialog, bool isAutoDismiss: true});
 
 /// dismiss dialog
 void dismiss();
+
+/// show info dialog
+void info(String tip);
+/// show fail dialog
+void fail(String errMsg);
+/// show success dialog
+void success(String success);
+/// show loading dialog
+void loading(String loadingTip);
 ```
 
 >See the example directory for more details.
@@ -234,11 +181,16 @@ void dismiss();
 
 ## 7. Change log
 
-## [2.1.0]
+### [3.0.0]
+
+* fix performance issues
+* easier way to call
+
+### [2.1.0]
 
 * add TipDialogHelper and deprecated TipDialogConnector
 
-## [2.0.1]
+### [2.0.1]
 
 * fix dismiss bug
 * upgrade android build gradle to 5.1.1

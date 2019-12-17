@@ -39,3 +39,8 @@
 ## [2.1.0]
 
 * add TipDialogHelper and deprecated TipDialogConnector
+
+## [3.0.0]
+
+* fix performance issues
+* easier way to call
