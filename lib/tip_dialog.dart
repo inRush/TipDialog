@@ -118,19 +118,16 @@ class TipDialog extends StatelessWidget {
 
 class TipDialogContainer extends StatefulWidget {
   TipDialogContainer(
-      {Key key,
-      @required this.child,
-      this.duration: const Duration(seconds: 2),
-      this.maskAlpha: 0.3})
-      : super(key: key);
+      {this.duration: const Duration(seconds: 2), this.maskAlpha: 0.3});
 
-  final Widget child;
   final Duration duration;
   final double maskAlpha;
 
   @override
   State<StatefulWidget> createState() {
-    return new TipDialogContainerState();
+    TipDialogContainerState state = TipDialogContainerState();
+    TipDialogHelper._init(state);
+    return state;
   }
 }
 
@@ -251,7 +248,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = [widget.child];
+    List<Widget> widgets = [];
     if (_show) {
       widgets.add(_buildMaskLayer());
       widgets.add(new ScaleTransition(
@@ -261,118 +258,47 @@ class TipDialogContainerState extends State<TipDialogContainer>
           child: _tipDialog,
         ),
       ));
-    }
-
-    return new _TipDialogProvider(
-        controller: new TipDialogController(
-            showCallback: show, dismissCallback: dismiss),
-        child: new Stack(
+      return new Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
           alignment: Alignment.center,
           children: widgets,
-        ));
-  }
-}
-
-typedef void ShowTipDialogCallback(
-    {@required Widget tipDialog, bool isAutoDismiss});
-typedef void DismissTipDialogCallback();
-
-class TipDialogController {
-  final ShowTipDialogCallback showCallback;
-  final DismissTipDialogCallback dismissCallback;
-
-  TipDialogController(
-      {Key key,
-      ShowTipDialogCallback showCallback,
-      DismissTipDialogCallback dismissCallback})
-      : showCallback = showCallback,
-        dismissCallback = dismissCallback;
-
-  show({@required Widget tipDialog, bool isAutoDismiss: true}) {
-    showCallback(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
-  }
-
-  dismiss() {
-    dismissCallback();
-  }
-}
-
-class _TipDialogProvider extends InheritedWidget {
-  final TipDialogController controller;
-
-  _TipDialogProvider(
-      {Key key, @required this.controller, @required Widget child})
-      : assert(controller != null),
-        assert(child != null),
-        super(key: key, child: child);
-
-  static TipDialogController of(BuildContext context) {
-    final _TipDialogProvider scope =
-        context.inheritFromWidgetOfExactType(_TipDialogProvider);
-    return scope?.controller;
-  }
-
-  @override
-  bool updateShouldNotify(_TipDialogProvider oldWidget) {
-    return controller != oldWidget.controller;
-  }
-}
-
-typedef Widget TipDialogBuilder(
-    BuildContext context, TipDialogController controller);
-
-@deprecated
-class TipDialogConnector extends StatelessWidget {
-  final TipDialogBuilder builder;
-
-  TipDialogConnector({this.builder});
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, _TipDialogProvider.of(context));
+        ),
+      );
+    }
+    return SizedBox.shrink();
   }
 }
 
 class TipDialogHelper {
-  static TipDialogController _controller;
+  static TipDialogContainerState _tipDialog;
 
-
-  static void _checkController(BuildContext context) {
-    if (_controller == null) {
-      _controller = _TipDialogProvider.of(context);
-    }
-    if (_controller == null) {
-      throw Exception(
-          "[TipDialogController] is not found in this widget tree, please set TipDialogContainer on this widget tree top");
-    }
+  static _init(TipDialogContainerState state) {
+    _tipDialog = state;
   }
 
-  static void show(BuildContext context,
-      {@required Widget tipDialog, bool isAutoDismiss: true}) {
-    _checkController(context);
-    _controller.show(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
+  static void show({@required Widget tipDialog, bool isAutoDismiss: true}) {
+    _tipDialog.show(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
   }
 
-  static void dismiss(BuildContext context) {
-    _checkController(context);
-    _controller.dismiss();
+  static void dismiss() {
+    _tipDialog.dismiss();
   }
 
-  static void info(BuildContext context, String tip) {
-    show(context, tipDialog: TipDialog(type: TipDialogType.INFO, tip: tip));
+  static void info(String tip) {
+    show(tipDialog: TipDialog(type: TipDialogType.INFO, tip: tip));
   }
 
-  static void fail(BuildContext context, String errMsg) {
-    show(context, tipDialog: TipDialog(type: TipDialogType.FAIL, tip: errMsg));
+  static void fail(String errMsg) {
+    show(tipDialog: TipDialog(type: TipDialogType.FAIL, tip: errMsg));
   }
 
-  static void success(BuildContext context, String success) {
-    show(context,
-        tipDialog: TipDialog(type: TipDialogType.SUCCESS, tip: success));
+  static void success(String success) {
+    show(tipDialog: TipDialog(type: TipDialogType.SUCCESS, tip: success));
   }
 
-  static void loading(BuildContext context, String loadingTip) {
-    show(context,
+  static void loading(String loadingTip) {
+    show(
         tipDialog: TipDialog(type: TipDialogType.LOADING, tip: loadingTip),
         isAutoDismiss: false);
   }
