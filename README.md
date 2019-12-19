@@ -1,5 +1,5 @@
 # TipDialog
-> Please use 3.0.0 or above, because earlier versions have serious performance issues
+> Please use 3.0.0 or above version, because earlier versions have serious performance issues
 
 [中文版](https://github.com/inRush/TipDialog/blob/master/README.zh-CN.md)
 
