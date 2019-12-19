@@ -1,4 +1,6 @@
 # TipDialog
+> Please use 3.0.0 or above, because earlier versions have serious performance issues
+
 [中文版](https://github.com/inRush/TipDialog/blob/master/README.zh-CN.md)
 
 A Flutter Tip Dialog
@@ -16,7 +18,6 @@ A Flutter Tip Dialog
 | Custom Icon Dialog | Custom Body Dialog |
 | --- | --- |
 | ![CustomIcon](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-icon.jpeg)| ![CustomBody](https://raw.githubusercontent.com/inRush/Resources/master/images/tip-dialog/custom-body.jpeg)|
-
 
 
 ## 1. Depend on it
