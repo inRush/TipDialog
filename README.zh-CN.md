@@ -1,6 +1,6 @@
 # TipDialog
-> 请使用3.0.0或更高版本，因为早期版本存在严重的性能问题
-> 如果示例不能运行，请查询有关Flutter升级AndroidX的问题
+> 1. 请使用3.0.0或更高版本，因为早期版本存在严重的性能问题
+> 2. 如果示例不能运行，请查询有关Flutter升级AndroidX的问题,
 > [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
 
 Flutter 提示框

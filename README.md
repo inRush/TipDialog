@@ -1,6 +1,6 @@
 # TipDialog
-> Please use 3.0.0 or above version, because earlier versions have serious performance issues
-> if example no working, please google questions about Flutter upgrade AndroidX
+> 1. Please use 3.0.0 or above version, because earlier versions have serious performance issues
+> 2. if example no working, please google questions about Flutter upgrade AndroidX,
 > [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
 
 [中文版](https://github.com/inRush/TipDialog/blob/master/README.zh-CN.md)
