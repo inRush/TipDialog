@@ -15,7 +15,15 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: <Widget>[
           MyHomePage(title: 'TipDialog Demo Home Page'),
-          TipDialogContainer(duration: const Duration(seconds: 2))
+          TipDialogContainer(
+              duration: const Duration(seconds: 2),
+              outsideTouchable: true,
+              onOutsideTouch: (Widget tipDialog) {
+                if (tipDialog is TipDialog &&
+                    tipDialog.type == TipDialogType.LOADING) {
+                  TipDialogHelper.dismiss();
+                }
+              })
         ],
       ),
     );
@@ -106,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: new Text(
                     "Custom",
                     style: new TextStyle(color: Colors.white),
+
                     /// if TipDialogContainer are outside of MaterialApp,
                     /// here is a must to set
                     textDirection: TextDirection.ltr,

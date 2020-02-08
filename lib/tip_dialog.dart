@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:loading_view/loading_view.dart';
 
-enum TipDialogType { NOTHING, LOADING, SUCCESS, FAIL, INFO }
+enum TipDialogType { NOTHING, LOADING, SUCCESS, FAIL, INFO, CUSTOM }
 
 class TipDialogIcon extends StatelessWidget {
   TipDialogIcon(this.type, {this.color: Colors.white});
@@ -46,30 +46,34 @@ class TipDialogIcon extends StatelessWidget {
 }
 
 class TipDialog extends StatelessWidget {
-  TipDialog({Key key, TipDialogType type: TipDialogType.NOTHING, this.tip})
+  TipDialog({Key key, this.type: TipDialogType.NOTHING, this.tip})
       : assert(type != null),
         icon = type == TipDialogType.NOTHING ? null : new TipDialogIcon(type),
-        bodyBuilder = null,
+        _bodyBuilder = null,
         color = const Color(0xbb000000),
         super(key: key);
 
   TipDialog.customIcon({Key key, this.icon, this.tip})
       : assert(icon != null || tip != null),
-        bodyBuilder = null,
+        _bodyBuilder = null,
+        type = TipDialogType.CUSTOM,
         color = const Color(0xbb000000),
         super(key: key);
 
   TipDialog.builder(
-      {Key key, this.bodyBuilder, this.color: const Color(0xbb000000)})
+      {Key key, WidgetBuilder bodyBuilder, this.color: const Color(0xbb000000)})
       : assert(bodyBuilder != null),
+        this._bodyBuilder = bodyBuilder,
+        type = TipDialogType.CUSTOM,
         tip = null,
         icon = null,
         super(key: key);
 
   final String tip;
   final Widget icon;
-  final WidgetBuilder bodyBuilder;
+  final WidgetBuilder _bodyBuilder;
   final Color color;
+  final TipDialogType type;
 
   Widget _buildBody() {
     List<Widget> childs = [];
@@ -110,18 +114,27 @@ class TipDialog extends StatelessWidget {
             ? new BoxConstraints(minHeight: 50.0, minWidth: 100.0)
             : new BoxConstraints(minHeight: 90.0, minWidth: 120.0),
         color: color,
-        child: bodyBuilder == null ? _buildBody() : bodyBuilder(context),
+        child: _bodyBuilder == null ? _buildBody() : _bodyBuilder(context),
       ),
     );
   }
 }
 
+typedef OutsideTouchCallback(Widget tipDialog);
+
 class TipDialogContainer extends StatefulWidget {
   TipDialogContainer(
-      {this.duration: const Duration(seconds: 2), this.maskAlpha: 0.3});
+      {this.duration: const Duration(seconds: 2),
+      this.maskAlpha: 0.3,
+      this.outsideTouchable: false,
+      this.onOutsideTouch});
 
   final Duration duration;
   final double maskAlpha;
+  final bool outsideTouchable;
+
+
+  final OutsideTouchCallback onOutsideTouch;
 
   @override
   State<StatefulWidget> createState() {
@@ -149,6 +162,9 @@ class TipDialogContainerState extends State<TipDialogContainer>
 
   void dismiss() {
     setState(() {
+      if (_prepareDismiss || !_show) {
+        return;
+      }
       if (_animationController.isAnimating) {
         _show = false;
         _animationController.stop(canceled: true);
@@ -237,10 +253,21 @@ class TipDialogContainerState extends State<TipDialogContainer>
     return new LayoutBuilder(builder: (context, size) {
       return new FadeTransition(
         opacity: _animationController,
-        child: new Container(
-          width: size.maxWidth,
-          height: size.maxHeight,
-          color: Colors.black.withAlpha(widget.maskAlpha * 255 ~/ 1),
+        child: new GestureDetector(
+          onTap: () {
+            if (widget.outsideTouchable) {
+              if (widget.onOutsideTouch == null && !_isAutoDismiss) {
+                this.dismiss();
+              } else {
+                widget.onOutsideTouch(_tipDialog);
+              }
+            }
+          },
+          child: new Container(
+            width: size.maxWidth,
+            height: size.maxHeight,
+            color: Colors.black.withAlpha(widget.maskAlpha * 255 ~/ 1),
+          ),
         ),
       );
     });
