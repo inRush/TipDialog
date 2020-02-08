@@ -44,3 +44,7 @@
 
 * fix performance issues
 * easier way to call
+
+## [3.1.0]
+
+* add outside touchable features

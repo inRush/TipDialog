@@ -1,5 +1,7 @@
 # TipDialog
 > 请使用3.0.0或更高版本，因为早期版本存在严重的性能问题
+> 如果示例不能运行，请查询有关Flutter升级AndroidX的问题
+> [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
 
 Flutter 提示框
 
@@ -48,6 +50,12 @@ import 'package:tip_dialog/tip_dialog.dart';
 this.duration: const Duration(seconds: 3),
 /// 遮罩层不透明度
 this.maskAlpha: 0.3
+// tip dialog 外部是否可以点击（即遮罩层）
+// 如果设置为true并且onOutsideTouch没有设置，那么当使用TipDialogHelper.loading()的时候，你可以点击遮罩层关闭dialog
+// 如果设置为true并且onOutsideTouch也设置了，那么当触摸遮罩层的时候，会调用onOutsideTouch方法
+this.outsideTouchable: false
+// 遮罩层点击回调 {@link OutsideTouchCallback}
+this.onOutsideTouch
 ```
 
 #### 全局使用
@@ -143,11 +151,12 @@ class MyApp extends StatelessWidget {
 ```
 enum TipDialogType { NOTHING, LOADING, SUCCESS, FAIL, INFO }
 
-NONTHING: no icon
+NOTHING: no icon
 LOADING: have a loading icon
 SUCCESS: have a success icon
 FAIL: have a fail icon
 INFO: have a info icon
+CUSTOM: custom tip dialog type, just a sign, do nothing
 ```
 ## 6. TipDialogHelper 可用方法
 
@@ -172,6 +181,10 @@ void loading(String loadingTip);
 >更多细节请参考示例中的代码.
 
 ## 7. 版本记录
+
+## [3.1.0]
+
+* 添加遮罩层点击功能
 
 ### [3.0.0]
 

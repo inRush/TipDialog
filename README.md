@@ -1,5 +1,7 @@
 # TipDialog
 > Please use 3.0.0 or above version, because earlier versions have serious performance issues
+> if example no working, please google questions about Flutter upgrade AndroidX
+> [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
 
 [中文版](https://github.com/inRush/TipDialog/blob/master/README.zh-CN.md)
 
@@ -50,6 +52,12 @@ import 'package:tip_dialog/tip_dialog.dart';
 this.duration: const Duration(seconds: 3),
 /// mask layer alpha
 this.maskAlpha: 0.3
+// outside touchable, default false
+// if true and onOutsideTouch not set, when use TipDialogHelper.loading(), you can touch mask layer to dismiss
+// if true and onOutsideTouch set, when touching the mask layer, onOutsideTouch will be called.
+this.outsideTouchable: false
+// outside touch callback {@link OutsideTouchCallback}
+this.onOutsideTouch
 ```
 
 #### Global Use
@@ -148,11 +156,12 @@ class MyApp extends StatelessWidget {
 ```
 enum TipDialogType { NOTHING, LOADING, SUCCESS, FAIL, INFO }
 
-NONTHING: no icon
+NOTHING: no icon
 LOADING: have a loading icon
 SUCCESS: have a success icon
 FAIL: have a fail icon
 INFO: have a info icon
+CUSTOM: custom tip dialog type, just a sign, do nothing
 ```
 ## 6. TipDialogHelper Method
 
@@ -181,6 +190,10 @@ void loading(String loadingTip);
 
 
 ## 7. Change log
+
+### [3.1.0]
+
+* add outside touchable features
 
 ### [3.0.0]
 
