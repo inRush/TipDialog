@@ -48,3 +48,7 @@
 ## [3.1.0]
 
 * add outside touchable features
+
+### [4.0.0]
+
+* migrating to null safety
