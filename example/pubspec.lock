@@ -70,10 +70,10 @@ packages:
   loading_view:
     dependency: transitive
     description:
-      name: loading_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
+      path: "../../LoadingView"
+      relative: true
+    source: path
+    version: "1.1.0"
   matcher:
     dependency: transitive
     description:

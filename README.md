@@ -2,6 +2,8 @@
 > 1. Please use 3.0.0 or above version, because earlier versions have serious performance issues
 > 2. if example no working, please google questions about Flutter upgrade AndroidX,
 > [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
+> 3. if run your app, it shows `Error: Cannot run with sound null safety`, please upgrade version to 4.0.0
+> [Reference](https://dart.dev/null-safety/migration-guide)
 
 [中文版](https://github.com/inRush/TipDialog/blob/master/README.zh-CN.md)
 
@@ -27,7 +29,7 @@ Add this to your package's pubspec.yaml file:
 
 ``` dart
 dependencies:
-  tip_dialog: ^3.1.0
+  tip_dialog: ^4.0.0
 ```
 ## 2. Install it
 You can install packages from the command line:
@@ -100,16 +102,14 @@ class MyApp extends StatelessWidget {
           }),
           new Divider(),
           _buildItem("Only text Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog(
+            TipDialogHelper.show(new TipDialog(
               type: TipDialogType.NOTHING,
               tip: "Do Not Repeat",
             ));
           }),
           new Divider(),
           _buildItem("Custom Icon Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.customIcon(
+            TipDialogHelper.show(new TipDialog.customIcon(
               icon: new Icon(
                 Icons.file_download,
                 color: Colors.white,
@@ -121,8 +121,7 @@ class MyApp extends StatelessWidget {
           }),
           new Divider(),
           _buildItem("Custom Body Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.builder(
+            TipDialogHelper.show(new TipDialog.builder(
               bodyBuilder: (context) {
                 return new Container(
                   width: 120.0,
@@ -171,7 +170,7 @@ CUSTOM: custom tip dialog type, just a sign, do nothing
 /// isAutoDismiss: decide whether to disappear automatically, default is true
 /// if true, the dialog will not automatically disappear
 /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
-void show({@required Widget tipDialog, bool isAutoDismiss: true});
+void show(Widget tipDialog, {bool isAutoDismiss: true});
 
 /// dismiss dialog
 void dismiss();
@@ -190,6 +189,10 @@ void loading(String loadingTip);
 
 
 ## 7. Change log
+
+### [4.0.0]
+
+* migrating to null safety
 
 ### [3.1.0]
 

@@ -46,14 +46,13 @@ class TipDialogIcon extends StatelessWidget {
 }
 
 class TipDialog extends StatelessWidget {
-  TipDialog({Key key, this.type: TipDialogType.NOTHING, this.tip})
-      : assert(type != null),
-        icon = type == TipDialogType.NOTHING ? null : new TipDialogIcon(type),
+  TipDialog({Key? key, this.type: TipDialogType.NOTHING, this.tip})
+      : icon = type == TipDialogType.NOTHING ? null : new TipDialogIcon(type),
         _bodyBuilder = null,
         color = const Color(0xbb000000),
         super(key: key);
 
-  TipDialog.customIcon({Key key, this.icon, this.tip})
+  TipDialog.customIcon({Key? key, this.icon, this.tip})
       : assert(icon != null || tip != null),
         _bodyBuilder = null,
         type = TipDialogType.CUSTOM,
@@ -61,17 +60,18 @@ class TipDialog extends StatelessWidget {
         super(key: key);
 
   TipDialog.builder(
-      {Key key, WidgetBuilder bodyBuilder, this.color: const Color(0xbb000000)})
-      : assert(bodyBuilder != null),
-        this._bodyBuilder = bodyBuilder,
+      {Key? key,
+      WidgetBuilder? bodyBuilder,
+      this.color: const Color(0xbb000000)})
+      : this._bodyBuilder = bodyBuilder,
         type = TipDialogType.CUSTOM,
         tip = null,
         icon = null,
         super(key: key);
 
-  final String tip;
-  final Widget icon;
-  final WidgetBuilder _bodyBuilder;
+  final String? tip;
+  final Widget? icon;
+  final WidgetBuilder? _bodyBuilder;
   final Color color;
   final TipDialogType type;
 
@@ -91,7 +91,7 @@ class TipDialog extends StatelessWidget {
             ? const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0)
             : const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
         child: new Text(
-          tip,
+          tip ?? "",
           textAlign: TextAlign.center,
           style: new TextStyle(color: Colors.white, fontSize: 15.0),
           textDirection: TextDirection.ltr,
@@ -114,7 +114,7 @@ class TipDialog extends StatelessWidget {
             ? new BoxConstraints(minHeight: 50.0, minWidth: 100.0)
             : new BoxConstraints(minHeight: 90.0, minWidth: 120.0),
         color: color,
-        child: _bodyBuilder == null ? _buildBody() : _bodyBuilder(context),
+        child: _bodyBuilder == null ? _buildBody() : _bodyBuilder!(context),
       ),
     );
   }
@@ -133,8 +133,7 @@ class TipDialogContainer extends StatefulWidget {
   final double maskAlpha;
   final bool outsideTouchable;
 
-
-  final OutsideTouchCallback onOutsideTouch;
+  final OutsideTouchCallback? onOutsideTouch;
 
   @override
   State<StatefulWidget> createState() {
@@ -146,17 +145,17 @@ class TipDialogContainer extends StatefulWidget {
 
 class TipDialogContainerState extends State<TipDialogContainer>
     with TickerProviderStateMixin {
-  Timer _timer;
-  bool _show;
-  AnimationController _animationController;
-  Animation _scaleAnimation;
-  VoidCallback _animationListener;
+  Timer? _timer;
+  bool _show = false;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late VoidCallback _animationListener;
   bool _prepareDismiss = false;
-  Widget _tipDialog;
+  late Widget _tipDialog;
 
   /// if true, the dialog will not automatically disappear
   /// otherwise, the dialog will automatically disappear after the [Duration] set by [TipDialogContainer]
-  bool _isAutoDismiss;
+  bool _isAutoDismiss = true;
 
   bool get isShow => _show;
 
@@ -181,8 +180,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   /// isLoading: decide whether to disappear automatically
   /// (default uses the value set by [TipDialogContainer],
   /// set type = TipDialogType.LOADING, the value will be true, otherwise will be false.)
-  void show({@required Widget tipDialog, bool isAutoDismiss: true}) {
-    assert(tipDialog != null);
+  void show(Widget tipDialog, {bool isAutoDismiss: true}) {
     _tipDialog = tipDialog;
     // when tip dialog equal null, isLoading must inherit the origin value
     _isAutoDismiss = isAutoDismiss;
@@ -223,7 +221,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
     _animationController.forward(from: 0.0);
     if (_isAutoDismiss) {
       if (_timer != null) {
-        _timer.cancel();
+        _timer?.cancel();
         if (_show) {
           dismiss();
         }
@@ -239,7 +237,7 @@ class TipDialogContainerState extends State<TipDialogContainer>
   @override
   void dispose() {
     if (_timer != null) {
-      _timer.cancel();
+      _timer?.cancel();
       if (_show) {
         dismiss();
       }
@@ -258,8 +256,8 @@ class TipDialogContainerState extends State<TipDialogContainer>
             if (widget.outsideTouchable) {
               if (widget.onOutsideTouch == null && !_isAutoDismiss) {
                 this.dismiss();
-              } else {
-                widget.onOutsideTouch(_tipDialog);
+              } else if (widget.onOutsideTouch != null) {
+                widget.onOutsideTouch!(_tipDialog);
               }
             }
           },
@@ -298,14 +296,14 @@ class TipDialogContainerState extends State<TipDialogContainer>
 }
 
 class TipDialogHelper {
-  static TipDialogContainerState _tipDialog;
+  static late TipDialogContainerState _tipDialog;
 
   static _init(TipDialogContainerState state) {
     _tipDialog = state;
   }
 
-  static void show({@required Widget tipDialog, bool isAutoDismiss: true}) {
-    _tipDialog.show(tipDialog: tipDialog, isAutoDismiss: isAutoDismiss);
+  static void show(Widget tipDialog, {bool isAutoDismiss: true}) {
+    _tipDialog.show(tipDialog, isAutoDismiss: isAutoDismiss);
   }
 
   static void dismiss() {
@@ -313,20 +311,19 @@ class TipDialogHelper {
   }
 
   static void info(String tip) {
-    show(tipDialog: TipDialog(type: TipDialogType.INFO, tip: tip));
+    show(TipDialog(type: TipDialogType.INFO, tip: tip));
   }
 
   static void fail(String errMsg) {
-    show(tipDialog: TipDialog(type: TipDialogType.FAIL, tip: errMsg));
+    show(TipDialog(type: TipDialogType.FAIL, tip: errMsg));
   }
 
   static void success(String success) {
-    show(tipDialog: TipDialog(type: TipDialogType.SUCCESS, tip: success));
+    show(TipDialog(type: TipDialogType.SUCCESS, tip: success));
   }
 
   static void loading(String loadingTip) {
-    show(
-        tipDialog: TipDialog(type: TipDialogType.LOADING, tip: loadingTip),
+    show(TipDialog(type: TipDialogType.LOADING, tip: loadingTip),
         isAutoDismiss: false);
   }
 }

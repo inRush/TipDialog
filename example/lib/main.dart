@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(),
       home: Stack(
         children: <Widget>[
-          MyHomePage(title: 'TipDialog Demo Home Page'),
+          MyHomePage('TipDialog Demo Home Page'),
           TipDialogContainer(
               duration: const Duration(seconds: 2),
               outsideTouchable: true,
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage(this.title,{Key? key}) : super(key: key);
 
   final String title;
 
@@ -76,23 +76,20 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
           new Divider(),
           _buildItem("Only Icon Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog(
+            TipDialogHelper.show(new TipDialog(
               type: TipDialogType.SUCCESS,
             ));
           }),
           new Divider(),
           _buildItem("Only text Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog(
+            TipDialogHelper.show(new TipDialog(
               type: TipDialogType.NOTHING,
               tip: "Do Not Repeat",
             ));
           }),
           new Divider(),
           _buildItem("Custom Icon Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.customIcon(
+            TipDialogHelper.show(new TipDialog.customIcon(
               icon: new Icon(
                 Icons.file_download,
                 color: Colors.white,
@@ -104,8 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
           new Divider(),
           _buildItem("Custom Body Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.builder(
+            TipDialogHelper.show(new TipDialog.builder(
               bodyBuilder: (context) {
                 return new Container(
                   width: 120.0,

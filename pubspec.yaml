@@ -7,10 +7,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  loading_view: ^1.0.2
+  loading_view: ^1.1.0
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dev_dependencies:
   flutter_test:

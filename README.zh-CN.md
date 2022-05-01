@@ -2,6 +2,8 @@
 > 1. 请使用3.0.0或更高版本，因为早期版本存在严重的性能问题
 > 2. 如果示例不能运行，请查询有关Flutter升级AndroidX的问题,
 > [AndroidX Migration - Flutterblock](https://flutter.dev/docs/development/androidx-migration)
+> 3. 如果在运行您的应用时，提示`Error: Cannot run with sound null safety`,请升级版本到4.0.0
+> [参考](https://dart.dev/null-safety/migration-guide)
 
 Flutter 提示框
 
@@ -26,7 +28,7 @@ Flutter 提示框
 
 ``` dart
 dependencies:
-  tip_dialog: ^3.1.0
+  tip_dialog: ^4.0.0
 ```
 
 ## 2. 安装
@@ -96,16 +98,14 @@ class MyApp extends StatelessWidget {
           }),
           new Divider(),
           _buildItem("Only text Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog(
+            TipDialogHelper.show(new TipDialog(
               type: TipDialogType.NOTHING,
               tip: "Do Not Repeat",
             ));
           }),
           new Divider(),
           _buildItem("Custom Icon Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.customIcon(
+            TipDialogHelper.show(new TipDialog.customIcon(
               icon: new Icon(
                 Icons.file_download,
                 color: Colors.white,
@@ -117,8 +117,7 @@ class MyApp extends StatelessWidget {
           }),
           new Divider(),
           _buildItem("Custom Body Tip Dialog", () async {
-            TipDialogHelper.show(
-                tipDialog: new TipDialog.builder(
+            TipDialogHelper.show(new TipDialog.builder(
               bodyBuilder: (context) {
                 return new Container(
                   width: 120.0,
@@ -166,7 +165,7 @@ CUSTOM: custom tip dialog type, just a sign, do nothing
 /// isAutoDismiss: 这个变量决定了显示出来的提示框是否会自动消失,默认为 true
 /// 这个值为false的时候,显示出来的提示框不会自动消失,除非调用dismiss方法
 /// 如果这个值是true,那么提示框会在一定时间内消失,这个值是在新建[TipDialogContainer]的时候设置的.
-void show({@required Widget tipDialog, bool isAutoDismiss: true});
+void show(Widget tipDialog, {bool isAutoDismiss: true});
 
 /// 隐藏提示框
 void dismiss();
@@ -181,6 +180,10 @@ void loading(String loadingTip);
 >更多细节请参考示例中的代码.
 
 ## 7. 版本记录
+
+### [4.0.0]
+
+* 升级到空安全
 
 ## [3.1.0]
 
